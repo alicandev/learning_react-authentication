@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logoImg from '../img/logo.jpg';
-import { Card, Logo, Form, Input, Button } from '../components/AuthForms';
+import {
+  Card, Logo, Form, Input, Button,
+} from '../components/AuthForms';
 
-const Signup = () => (
+const SignUp = () => (
   <Card>
     <Logo src={logoImg} />
     <Form>
@@ -15,5 +17,5 @@ const Signup = () => (
     <Link to="/login">Already have an account?</Link>
   </Card>
 );
- 
-export default Signup;
+
+export default SignUp;
