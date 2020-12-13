@@ -10,14 +10,14 @@ import { useAuth } from '../context/auth';
 const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [username, setUsername] = useState(false);
-  const [password, setPassword] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const { setAuthTokens } = useAuth();
 
   const postLogin = () => {
     // The url below is supposed to be to a website that distributes tokens
-    axios.post('https://www.someplace.com/auth/login' , {
-      userName: username,
+    axios.post('https://www.someplace.com/auth/login', {
+      username,
       password,
     }).then((result) => {
       if (result.status === 200) {
@@ -26,9 +26,7 @@ const Login = () => {
       } else {
         setIsError(true);
       }
-    }).catch(() => {
-      setIsError(true);
-    });
+    }).catch(() => (setIsError(true)));
   };
 
   if (isLoggedIn) {
@@ -39,11 +37,22 @@ const Login = () => {
     <Card>
       <Logo src={logoImg} />
       <Form>
-        <Input type="email" placeholder="email" />
-        <Input type="password" placeholder="password" />
-        <Button>Sign In</Button>
+        <Input
+          type="email"
+          value={username}
+          onChange={(e) => (setUsername(e.target.value))}
+          placeholder="email"
+        />
+        <Input
+          type="password"
+          value={password}
+          onChange={(e) => (setPassword(e.target.value))}
+          placeholder="password"
+        />
+        <Button onClick={postLogin}>Sign In</Button>
       </Form>
       <Link to="/signup">Don&apos;t have an account?</Link>
+      {isError && <Error>The username or pasword provided were incorrect.</Error>}
     </Card>
   );
 };

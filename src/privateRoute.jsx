@@ -4,13 +4,15 @@ import PropTypes from 'prop-types';
 import { useAuth } from './context/auth';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const isAuthenticated = useAuth();
+  const { authTokens } = useAuth();
   return (
     <Route
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...rest}
       render={(props) => (
-        isAuthenticated ? (
+        // Normally, we'd have to ensure that the authTokens is valid.
+        // Here, it's not done for the sake of simplicity.
+        authTokens ? (
           // eslint-disable-next-line react/jsx-props-no-spreading
           <Component {...props} />
         ) : (
