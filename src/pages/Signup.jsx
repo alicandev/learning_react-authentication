@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
@@ -7,13 +9,14 @@ import {
 } from '../components/AuthForms';
 import { useAuth } from '../context/auth';
 
-const SignUp = () => {
+const SignUp = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const { setAuthTokens } = useAuth();
+  const referrer = props.location.state.referrer || '/';
 
   const postSignUp = () => {
     axios.post('https://www.someplace/auth/signup', {
@@ -31,7 +34,7 @@ const SignUp = () => {
   };
 
   if (isLoggedIn) {
-    return <Redirect to="/" />;
+    return <Redirect to={referrer} />;
   }
 
   return (

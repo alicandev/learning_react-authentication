@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
@@ -7,12 +9,13 @@ import {
 } from '../components/AuthForms';
 import { useAuth } from '../context/auth';
 
-const Login = () => {
+const Login = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { setAuthTokens } = useAuth();
+  const referrer = props.location.state.referrer || '/';
 
   const postLogin = () => {
     // The url below is supposed to be to a website that distributes tokens
@@ -30,7 +33,7 @@ const Login = () => {
   };
 
   if (isLoggedIn) {
-    return <Redirect to="/" />;
+    return <Redirect to={referrer} />;
   }
 
   return (
